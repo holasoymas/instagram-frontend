@@ -1,0 +1,102 @@
+/* Overall Styles */
+body {
+  font-family: Arial, sans-serif; /* Use a clean, modern font */
+}
+
+.container {
+  display: flex; /* Center the content horizontally */
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ensure full viewport height */
+}
+
+/* /* Login Box Styles */
+.box {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 40px;
+  width: 25%;
+  text-align: center;
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333; /* Darker text color */
+}
+
+/* Login Form Styles */
+.login-form {
+  display: flex;
+  flex-direction: column; /* Stack fields vertically */
+}
+
+.field {
+  margin-bottom: 15px;
+  position: relative; /* Enable label positioning */
+}
+
+.field input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 3px; /* Rounded corners */
+  font-size: 16px;
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.field input:focus + label,
+.field input:valid + label {
+  font-size: 12px; /* Smaller font size for focused/valid input */
+  top: 10px; /* Move label closer to input on focus/valid */
+  color: #333; /* Darker text color for label */
+}
+
+.login-button {
+  background-color: #e4405f;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  transition: 0.2s ease-in-out;
+}
+
+.login-button:hover {
+  background-color: #ba283e; /* Darker blue on hover */
+}
+
+.goodBtn {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* Separator Styles */
+.separator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.separator .line {
+  width: 100%;
+  height: 1px;
+  background-color: #ccc; /* Light separator line */
+}
+
+.separator p {
+  color: #999;
+  font-size: 14px;
+  margin: 0 10px;
+}
+
+/* Other Login Options Styles */
+.other {
+  margin-top: 20px;
+}

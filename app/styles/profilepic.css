@@ -1,0 +1,13 @@
+.preview-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.profile-preview {
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 4%;
+  cursor: pointer;
+}
