@@ -27,7 +27,7 @@ export const ProfilePic: React.FC<ProfilePageProp> = ({
         // api request to uplaod picture
         const res = await createProfilePic(file);
         // console.log(res);
-        const profilePicUrl = res.cloudinaryId;
+        const profilePicUrl = res.url;
         // setting the image url to the database
         handleProfilePictureName(profilePicUrl);
       }
