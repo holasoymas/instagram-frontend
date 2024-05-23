@@ -9,15 +9,16 @@ import ProfileNameAndSetting from "../../ui/profile/profileNameAndSettings";
 import ProfileStats from "../../ui/profile/profileStatus";
 import { getUser } from "../../api/userRoute";
 import { BackendUser } from "../../lib/definations";
-import { usePathname } from "next/navigation";
-import { ProfileDataSkeleton, ProfilePicSkeleton } from "@/app/ui/skeletons";
+import { usePathname, useRouter } from "next/navigation";
+import { ProfileDataSkeleton } from "@/app/ui/skeletons";
 import { getLocalStorage } from "@/app/lib/utils";
 
 export default function ProfilePage() {
   const [data, setData] = useState<BackendUser | null>(null);
   const [owner, setOwner] = useState<boolean>(false);
-  const pathname = usePathname();
 
+  const pathname = usePathname();
+  const router = useRouter();
   //to get the username only from the url
   const userName = pathname.split("/").pop();
 
@@ -27,27 +28,32 @@ export default function ProfilePage() {
       const fetchUser = async () => {
         try {
           const user = await getUser(userName, getLocalStorage("token"));
-          setData(user.user);
-          setOwner(user.isOwner);
+          if (user) {
+            console.log(user);
+            setData(user.user);
+            setOwner(user.isOwner);
+            // console.log(data);
+          } else {
+            router.push("/");
+          }
         } catch (err) {
-          console.error("Error while fetching ", (err as Error).message);
+          // console.error("Error while fetching user:", (err as Error).message);
+          router.push("/");
         }
       };
       fetchUser();
-    }, []);
+    }, [userName, router]);
 
     return (
       <>
         <header>
           <div className="container">
             <div className="profile">
-              <Suspense fallback={<ProfilePicSkeleton />}>
-                <ProfileImage />
-              </Suspense>
               {data ? (
                 <>
+                  <ProfileImage img={data.profilePic} />
                   <Suspense fallback={<ProfileDataSkeleton />}>
-                    <ProfileNameAndSetting firstName={data.username} owner={owner} />
+                    <ProfileNameAndSetting username={data.username} owner={owner} />
                     <ProfileStats
                       posts={data.posts.length}
                       followers={data.followers.length}
@@ -65,7 +71,7 @@ export default function ProfilePage() {
           {/* End of container  */}
         </header>
 
-        <Gallery />
+        {data && data.posts ? <Gallery posts={data.posts} /> : "Loading Posts......."}
       </>
     );
   }
