@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
+import { redirect } from "next/navigation";
 
-const BASE_URL = "http://localhost:8000";
+export const BASE_URL = "http://localhost:8000";
 
 export const createUser = async (profileData: object) => {
   try {
@@ -12,6 +13,16 @@ export const createUser = async (profileData: object) => {
   }
 };
 
+export const loginUser = async (loginData: object) => {
+  try {
+    const res = await axios.post(`${BASE_URL}/api/user/login`, loginData);
+    // console.log(res.data);
+    return res.data;
+  } catch (err) {
+    console.error("Error while connecting server ", err);
+  }
+};
+
 export const getUser = async (username: string, token: string) => {
   try {
     const res = await axios.get(`${BASE_URL}/api/user/${username}`, {
@@ -19,15 +30,25 @@ export const getUser = async (username: string, token: string) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(res);
     return res.data;
   } catch (err) {
     const axiosError = err as AxiosError;
-    if (axiosError.response && axiosError.response.status == 403) {
-      console.log("is this part entered");
-      console.log(axiosError.response.data);
-      return axiosError.response.data;
+    if (axiosError.response) {
+      if (axiosError.response.status === 403) {
+        // User is unauthorized, return response data
+        return await axiosError.response.data;
+      }
+      if (axiosError.response.status === 401) {
+        localStorage.removeItem("token");
+        console.log("Am i live");
+        // User is not authenticated, redirect to login page
+        redirect("/");
+      }
+    } else {
+      // Handle other types of errors
+      console.error("Error while fetching user:", axiosError.message);
     }
-    // console.error((err as Error).message);
+    // If error is not caught, return null or handle it appropriately
+    return null;
   }
 };

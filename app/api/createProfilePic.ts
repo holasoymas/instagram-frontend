@@ -6,6 +6,7 @@ export const createProfilePic = async (file: File) => {
   try {
     const fd = new FormData();
     fd.append("image", file);
+    console.log(fd);
     // fd.append("text", "hello");
     // const formData = { img: file, text: "hello" };
     const res = await axios.post(`${BASE_URL}/upload-profile`, fd, {

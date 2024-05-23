@@ -22,7 +22,10 @@ export interface ProfilePageProp extends Omit<SignupForm, "formData"> {
 }
 
 export type BackendUser = Omit<UserProfile, "password" | "repeatPassword"> & {
-  posts: string[];
+  posts: postData[];
+  createdAt: string;
+  _v: number;
+  _id: string;
   followers: string[];
   following: string[];
 };
@@ -32,8 +35,12 @@ export interface OAuthSeperatorProps {
 }
 
 export interface ProfileNameAndSettingProps {
-  firstName: string;
+  username: string;
   owner: boolean;
+}
+
+export interface ProfileImageProp {
+  img: string;
 }
 
 type SeverityMsg = "error" | "success" | "warning" | "info";
@@ -45,8 +52,22 @@ export interface NotificationProps {
   handleClose: () => void;
 }
 
+export interface postData {
+  image: string;
+  caption: string;
+  userId: string;
+}
+
+export interface PostsProp {
+  posts: postData[];
+}
+
 export interface ProfileStatsProps {
   posts: number;
   followers: number;
   following: number;
+}
+
+export interface CreatePostProp {
+  username: string;
 }

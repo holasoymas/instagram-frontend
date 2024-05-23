@@ -3,6 +3,25 @@ body {
   font-family: Arial, sans-serif; /* Use a clean, modern font */
 }
 
+/* For upload post */
+.preview-container {
+  width: 100%;
+  max-width: 350px; /* Set a maximum width for the container */
+  height: auto; /* Let the height adjust dynamically based on the image */
+  overflow: hidden;
+  /* border-radius: 8px; */
+  /* border: 2px solid #000; */
+}
+
+.preview-image {
+  position: relative;
+  width: 100%;
+  /* height: 100vh; */
+  height: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
 .container {
   display: flex; /* Center the content horizontally */
   justify-content: center;

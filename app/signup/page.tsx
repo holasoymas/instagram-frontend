@@ -53,7 +53,7 @@ export default function Signin() {
     e.preventDefault();
     try {
       if (formData.profilePic === "") {
-        formData.profilePic = "my-account-icon_pdmjw8";
+        formData.profilePic = "https://res.cloudinary.com/dbkltjz6j/image/upload/v1713110781/my-account-icon_pdmjw8.svg";
       }
       const res = await createUser(formData);
       console.log(res);
