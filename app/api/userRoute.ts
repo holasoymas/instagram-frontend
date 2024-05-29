@@ -30,6 +30,12 @@ export const getUser = async (username: string, token: string) => {
         Authorization: `Bearer ${token}`,
       },
     });
+    console.log(res);
+    if (res.status == 401) {
+      localStorage.removeItem("token");
+      console.log("I this part touching");
+      return null;
+    }
     return res.data;
   } catch (err) {
     const axiosError = err as AxiosError;
@@ -37,12 +43,8 @@ export const getUser = async (username: string, token: string) => {
       if (axiosError.response.status === 403) {
         // User is unauthorized, return response data
         return await axiosError.response.data;
-      }
-      if (axiosError.response.status === 401) {
+      } else if (axiosError.response.status === 401) {
         localStorage.removeItem("token");
-        console.log("Am i live");
-        // User is not authenticated, redirect to login page
-        redirect("/");
       }
     } else {
       // Handle other types of errors

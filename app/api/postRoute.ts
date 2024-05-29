@@ -20,3 +20,12 @@ export const createPost = async (postData: FormData, token: string) => {
     }
   }
 };
+
+export const getPosts = async () => {
+  try {
+    const posts = await axios.get(`${BASE_URL}/api/user/posts`);
+    return posts.data;
+  } catch (err) {
+    console.error("Error while fetching posts " + err);
+  }
+};
