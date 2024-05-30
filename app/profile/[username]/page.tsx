@@ -21,10 +21,8 @@ export default function ProfilePage() {
   const router = useRouter();
   //to get the username only from the url
   const userName = pathname.split("/").pop();
-
-  console.log(userName);
-  if (userName) {
-    useEffect(() => {
+  useEffect(() => {
+    if (userName) {
       const fetchUser = async () => {
         try {
           const user = await getUser(userName, getLocalStorage("token"));
@@ -32,47 +30,47 @@ export default function ProfilePage() {
             console.log(user);
             setData(user.user);
             setOwner(user.isOwner);
-            // console.log(data);
           } else {
             router.push("/");
           }
         } catch (err) {
-          // console.error("Error while fetching user:", (err as Error).message);
           router.push("/");
         }
       };
       fetchUser();
-    }, [userName, router]);
+    } else {
+      router.push("/");
+    }
+  }, [userName, router]);
 
-    return (
-      <>
-        <header>
-          <div className="container">
-            <div className="profile">
-              {data ? (
-                <>
-                  <ProfileImage img={data.profilePic} />
-                  <Suspense fallback={<ProfileDataSkeleton />}>
-                    <ProfileNameAndSetting username={data.username} owner={owner} />
-                    <ProfileStats
-                      posts={data.posts.length}
-                      followers={data.followers.length}
-                      following={data.following.length}
-                    />
-                    <ProfileBio />
-                  </Suspense>
-                </>
-              ) : (
-                "Loading........"
-              )}
-            </div>
-            {/* End of profile section */}
+  return (
+    <>
+      <header>
+        <div className="container">
+          <div className="profile">
+            {data ? (
+              <>
+                <ProfileImage img={data.profilePic} />
+                <Suspense fallback={<ProfileDataSkeleton />}>
+                  <ProfileNameAndSetting username={data.username} owner={owner} />
+                  <ProfileStats
+                    posts={data.posts.length}
+                    followers={data.followers.length}
+                    following={data.following.length}
+                  />
+                  <ProfileBio />
+                </Suspense>
+              </>
+            ) : (
+              "Loading........"
+            )}
           </div>
-          {/* End of container  */}
-        </header>
+          {/* End of profile section */}
+        </div>
+        {/* End of container  */}
+      </header>
 
-        {data && data.posts ? <Gallery posts={data.posts} /> : "Loading Posts......."}
-      </>
-    );
-  }
+      {data && data.posts ? <Gallery posts={data.posts} /> : "Loading Posts......."}
+    </>
+  );
 }
