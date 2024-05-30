@@ -75,7 +75,7 @@ export const LoginForm = () => {
         </div>
         <div>
           <p>
-            Don't have an account? <Link href="/signup">Sign Up</Link>
+            Don&apos;t have an account? <Link href="/signup">Sign Up</Link>
           </p>
         </div>
       </div>
