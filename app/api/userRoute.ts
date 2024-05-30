@@ -1,12 +1,11 @@
 import axios, { AxiosError } from "axios";
-import { redirect } from "next/navigation";
 
-export const BASE_URL = "http://localhost:8000";
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const createUser = async (profileData: object) => {
   try {
     const res = await axios.post(`${BASE_URL}/api/user`, profileData);
-    // console.log(res.data);
+    // console.log(BASE_URL);
     return res.data;
   } catch (err) {
     console.error("Error wile uplaoding " + (err as Error));
@@ -31,6 +30,7 @@ export const getUser = async (username: string, token: string) => {
       },
     });
     console.log(res);
+    console.log(BASE_URL);
     if (res.status == 401) {
       localStorage.removeItem("token");
       console.log("I this part touching");
